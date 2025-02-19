@@ -10,7 +10,7 @@ $successMessage = ' ';
 echo 'sending ...';
 if (!empty($_POST))
 {
-  $name = $_POST['firstName'];
+  $name = $_POST['name'];
   $email = $_POST['email'];
   $message = $_POST['message'];
 
@@ -33,7 +33,7 @@ if (!empty($_POST))
       $allErrors = join ('<br/>', $errors);
       $errorMessage = "<p style='color: red; '>{$allErrors}</p>";
   } else {
-      $fromEmail = 'anyname@example.com';
+      $fromEmail = 'contact@realsolutionitwa.com';
       $emailSubject = 'New email from your contact form';
 
       // Create a new PHPMailer instance
