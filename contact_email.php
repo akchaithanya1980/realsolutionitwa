@@ -2,7 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/autoload.php';
+require 'realsolutionitwa.com/contact_email.php';
 
 $errors = [];
 $errorMessage = ' ';
