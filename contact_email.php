@@ -41,11 +41,10 @@ if (!empty($_POST))
       try {
             // Configure the PHPMailer instance
             $mail->isSMTP();
-            $mail->Host = 'sandbox.smtp.mailtrap.io';
+            $mail->Host = 'live.smtp.mailtrap.io';
             $mail->SMTPAuth = true;
-            $mail->Username = '3d758154e23894';
-            $mail->Password = 'c7f20dc60b1e33';
-            $mail->SMTPSecure = 'tls';
+            $mail->Username = 'api';
+            $mail->Password = '686199b787da7d3192318c4f81e44f51';
             $mail->Port = 587;
            
             // Set the sender, recipient, subject, and body of the message 
@@ -53,7 +52,6 @@ if (!empty($_POST))
             $mail->addAddress($email);
             $mail->setFrom($fromEmail);
             $mail->Subject = $emailSubject;
-            $mail->isHTML( isHtml: true);
             $mail->Body = "<p>Name: {$name}</p><p>Email: {$email}</p><p>Message: {$message}</p>";
          
             // Send the message
