@@ -42,7 +42,7 @@ if (!empty($_POST))
             // Configure the PHPMailer instance
             $mail->isSMTP();
             $mail->Host = 'sandbox.smtp.mailtrap.io';
-            $mail->SMTPAuth = flase;
+            $mail->SMTPAuth = true;
             $mail->Username = '3d758154e23894';
             $mail->Password = 'c7f20dc60b1e33';
             $mail->SMTPSecure = 'tls';
