@@ -41,10 +41,10 @@ if (!empty($_POST))
       try {
             // Configure the PHPMailer instance
             $mail->isSMTP();
-            $mail->Host = 'smtp.google.com';
+            $mail->Host = 'sandbox.smtp.mailtrap.io';
             $mail->SMTPAuth = true;
-            $mail->Username = 'contact@realsolutionitwa.com';
-            $mail->Password = 'Welcome1!';
+            $mail->Username = '3d758154e23894';
+            $mail->Password = 'c7f20dc60b1e33';
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
            
