@@ -1,51 +1,69 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
+
 $errors = [];
+$errorMessage = ' ';
+$successMessage = ' ';
+echo 'sending ...';
+if (!empty($_POST))
+{
+  $name = $_POST['firstName'];
+  $email = $_POST['email'];
+  $message = $_POST['message'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get POST data
-    $name = isset($_POST['name']) ? strip_tags(trim($_POST['name'])) : '';
-    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
-    $message = isset($_POST['message']) ? strip_tags(trim($_POST['message'])) : '';
+  if (empty($name)) {
+      $errors[] = 'Name is empty';
+  }
 
-    // Validate form fields
-    if (empty($name)) {
-        $errors[] = 'Name is empty';
-    }
+  if (empty($email)) {
+      $errors[] = 'Email is empty';
+  } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $errors[] = 'Email is invalid';
 
-    if (empty($email)) {
-        $errors[] = 'Email is empty';
-    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = 'Email is invalid';
-    }
+  }
 
-    if (empty($message)) {
-        $errors[] = 'Message is empty';
-    }
+  if (empty($message)) {
+      $errors[] = 'Message is empty';
+  }
 
-    // If no errors, send email
-    if (empty($errors)) {
-        // Recipient email address (replace with your own)
-        $recipient = "contact@realsolutionitwa.com";
+  if (!empty($errors)) {
+      $allErrors = join ('<br/>', $errors);
+      $errorMessage = "<p style='color: red; '>{$allErrors}</p>";
+  } else {
+      $fromEmail = 'anyname@example.com';
+      $emailSubject = 'New email from your contact form';
 
-        // Additional headers
-        $headers = "From: $name <$email>";
-
-        // Send email
-        if (mail($recipient, $message, $headers)) {
-            echo "Email sent successfully!";
-        } else {
-            echo "Failed to send email. Please try again later.";
-        }
-    } else {
-        // Display errors
-        echo "The form contains the following errors:<br>";
-        foreach ($errors as $error) {
-            echo "- $error<br>";
-        }
-    }
-} else {
-    // Not a POST request, display a 403 forbidden error
-    header("HTTP/1.1 403 Forbidden");
-    echo "You are not allowed to access this page.";
+      // Create a new PHPMailer instance
+      $mail = new PHPMailer(exceptions: true);
+      try {
+            // Configure the PHPMailer instance
+            $mail->isSMTP();
+            $mail->Host = 'smtp.google.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'contact@realsolutionitwa.com';
+            $mail->Password = 'Welcome1!';
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
+           
+            // Set the sender, recipient, subject, and body of the message 
+            $mail->setFrom($email);
+            $mail->addAddress($email);
+            $mail->setFrom($fromEmail);
+            $mail->Subject = $emailSubject;
+            $mail->isHTML( isHtml: true);
+            $mail->Body = "<p>Name: {$name}</p><p>Email: {$email}</p><p>Message: {$message}</p>";
+         
+            // Send the message
+            $mail->send () ;
+            $successMessage = "<p style='color: green; '>Thank you for contacting us :)</p>";
+      } catch (Exception $e) {
+            $errorMessage = "<p style='color: red; '>Oops, something went wrong. Please try again later</p>";
+echo $errorMessage;
+  }
 }
+}
+
 ?>
